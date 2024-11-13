@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHS DAYS COUNTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #181818;
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+        }
+
+        /* Title */
+        #title {
+            font-family: 'Roboto', sans-serif;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        /* Main counter */
+        #counter {
+            font-size: 72px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        /* Time left */
+        #time-left {
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        /* Months left */
+        #months-left {
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        /* Snowflakes styling */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Snow Container */
+        #snow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Random Quotes styling */
+        #quote {
+            font-size: 18px;
+            font-style: italic;
+            margin-top: 20px;
+            color: lightgray;
+            text-align: center;
+            width: 90%;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-shadow: 0 0 12px rgba(0, 0, 255, 0.6), 0 0 18px rgba(0, 0, 255, 0.6), 0 0 24px rgba(0, 0, 255, 0.6);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="title">NHS DAYS COUNTER</div>
+    <div id="counter"></div>
+    <div id="time-left"></div>
+    <div id="months-left"></div>
+    <div id="quote"></div>
+
+    <div id="snow"></div>
+
+    <script>
+        // Countdown to June 11, 2025
+        const endDate = new Date("June 11, 2025 00:00:00").getTime();
+
+        // Random quotes array (updated with new quotes)
+        const quotes = [
+            "Miles Petik, has multiple degrees in toiletology, rizz science, and being retarded.",
+            "Joseph Korah had a hard life in the 7th grade, being constantly hit by pencils by Eljan.",
+            "Enzo, will be missed greatly.",
+            "Nolan Howie is fat as shit and a bitchless fuck.",
+            "Harris N. is a very unique individual, in a good way.",
+            "Vanya is a professional slave owner.",
+            "Cole F's last name is actually Freaky, because he tends to get freaky between 1 - 2AM in the morning.",
+            "Zaid is a self-taught expert at flying & hijacking planes.",
+            "Colin W. is actually a 31 year old man, pretending to be a teen in order to catch & deport illegal immigrants.",
+            "Cameron, also known as Dr. Yang, has been obedient to Amazook, and has been a big part in the success of it.",
+            "Marko is secretly preparing the fuhrer's return, as his reboot card has been found from 1942.",
+            "Joshua Koshko actually owns costco.",
+            "Aarush will be missed greatly, we miss you man.",
+            "William T. the owner of City Wok, has been serving high quality chinese food since the early 2000s.",
+            "Stay aware, Ethan H is known for touching people in their sleeps.",
+            "Tommy's entire family are descendants of primates.",
+            "Waleed, Ayo, & Aiden G have an extraordinary & impressive genetic trait that makes them completely invisible in dark environments.",
+            "Keep your conversations private! Jitesh & Kavi have red dots on their forehead that indicate when they are recording or not.",
+            "Zaid is not the average ordinary aircraft passenger..",
+            "Miles Petik is known for his ability to turn people close to him mentally retarded near-instantly.",
+            "Joseph is known for his DEEP affection towards chicken 65, and not so much his brother.",
+            "Experts say there is a 87% chance of Miles Petik being a Pedophile.",
+            "Colin Wilburn is on a mission to deport the illegals.",
+            "Josh is hiding 76 children in his basement.",
+            "Zaid's favorite airplane is a Boeing 767-223ER.",
+            "Aiden G. loves chicken, and signed the Hungry Howie Rejection Act in 1868."
+        ];
+
+        // Function to calculate time left
+        function updateCounter() {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const monthsLeft = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));  // Approximate months left
+
+            document.getElementById("counter").innerHTML = days + " DAYS";
+            document.getElementById("time-left").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+            document.getElementById("months-left").innerHTML = monthsLeft + " MONTHS LEFT";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("counter").innerHTML = "COUNTDOWN EXPIRED";
+                document.getElementById("time-left").style.display = "none";
+                document.getElementById("months-left").style.display = "none";
+            }
+        }
+
+        // Function to show a random quote
+        function updateQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById("quote").innerText = quotes[randomIndex];
+        }
+
+        // Create Snowflakes
+        function createSnowflakes() {
+            const snowContainer = document.getElementById("snow");
+
+            setInterval(function() {
+                let snowflake = document.createElement("div");
+                snowflake.classList.add("snowflake");
+                snowflake.style.left = Math.random() * 100 + "%";
+                snowflake.style.animationDuration = Math.random() * 5 + 5 + "s";
+                snowflake.style.width = Math.random() * 8 + 4 + "px";
+                snowflake.style.height = snowflake.style.width;
+                snowContainer.appendChild(snowflake);2
+
+                setTimeout(() => {
+                    snowflake.remove();
+                }, 10000);
+            }, 150);
+        }
+
+        // Start snow effect
+        createSnowflakes();
+
+        // Update the countdown and quote every second
+        setInterval(updateCounter, 1000);
+        setInterval(updateQuote, 5000);  // Update the quote every 5 seconds
+
+    </script>
+
+</body>
+</html>
